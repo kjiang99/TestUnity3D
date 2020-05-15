@@ -7,8 +7,10 @@ public class PlayerController : MonoBehaviour
 {
     void Update()
     {
-        InteractWithCombat();
-        InteractWithMovement();
+        if (InteractWithCombat())
+            return;
+        if (InteractWithMovement())
+            return;
     }
 
     private bool InteractWithCombat()
@@ -29,25 +31,26 @@ public class PlayerController : MonoBehaviour
         return false;
     }
 
-    private void InteractWithMovement()
-    {
-        if (Input.GetMouseButton(0))
-        {
-            MoveToCursor();
-        }
-    }
 
-    private void MoveToCursor()
+    private bool InteractWithMovement()
     {
         Ray ray = GetMouseRay();
-        Debug.DrawRay(ray.origin, ray.direction * 100);
         RaycastHit hit;
         bool hasHit = Physics.Raycast(ray, out hit);
+
         if (hasHit)
         {
-            GetComponent<Mover>().MoveTo (hit.point);
+            if (Input.GetMouseButton(0))
+            {
+                GetComponent<Mover>().StartMoveAction(hit.point);
+            }
+
+            Debug.DrawRay(ray.origin, ray.direction * 100);
+            return true;
         }
+        return false;
     }
+
 
     private static Ray GetMouseRay()
     {

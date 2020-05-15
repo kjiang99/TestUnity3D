@@ -24,10 +24,23 @@ public class Mover : MonoBehaviour
     }
 
 
+    public void StartMoveAction(Vector3 destination)
+    {
+        GetComponent<Fighter>().Cancel();
+        MoveTo(destination);
+    }
+
+
     public void MoveTo(Vector3 destination)
     {
         navMeshAgent.destination = destination;
-        //navMeshAgent.isStopped = false;
+        navMeshAgent.isStopped = false;
+    }
+
+
+    public void Stop()
+    {
+        navMeshAgent.isStopped = true;
     }
 
 
