@@ -4,10 +4,8 @@ using UnityEngine;
 using UnityEngine.AI;
 
 
-public class Mover : MonoBehaviour
+public class Mover : MonoBehaviour, IAction
 {
-    //[SerializeField] Transform target;
-
     NavMeshAgent navMeshAgent;
 
     private void Start()
@@ -18,15 +16,14 @@ public class Mover : MonoBehaviour
 
     void Update()
     {
-        //this.GetComponent<NavMeshAgent>().destination = target.position;
-
         UpdateAnimator();
     }
 
 
     public void StartMoveAction(Vector3 destination)
     {
-        GetComponent<Fighter>().Cancel();
+        //GetComponent<Fighter>().Cancel();
+        GetComponent<ActionScheduler>().StartAction(this);
         MoveTo(destination);
     }
 
@@ -38,7 +35,7 @@ public class Mover : MonoBehaviour
     }
 
 
-    public void Stop()
+    public void Cancel()
     {
         navMeshAgent.isStopped = true;
     }
