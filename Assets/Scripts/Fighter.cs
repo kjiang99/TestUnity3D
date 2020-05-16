@@ -18,6 +18,7 @@ public class Fighter : MonoBehaviour, IAction
         else
         {
             GetComponent<Mover>().Cancel();
+            AttackBehaviour();
         }
     }
 
@@ -35,5 +36,17 @@ public class Fighter : MonoBehaviour, IAction
     public void Cancel()
     {
         target = null;
+    }
+
+
+    private void AttackBehaviour()
+    {
+        GetComponent<Animator>().SetTrigger("attack");
+    }
+
+    // Animation Event
+    private void Hit()
+    {
+
     }
 }
