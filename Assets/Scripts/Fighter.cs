@@ -4,11 +4,19 @@ using UnityEngine;
 public class Fighter : MonoBehaviour, IAction
 {
     [SerializeField] float weaponRange = 2f;
+    [SerializeField] float timeBetweenAttacks = 3f;
+    [SerializeField] float weaponDamage = 5f;
+
+
 
     Transform target;
+    float timeSinceLastAttack = 0;
+
 
     private void Update()
     {
+        timeSinceLastAttack += Time.deltaTime;
+
         if (target == null) return;
 
         if (!GetIsInRange())
@@ -41,12 +49,18 @@ public class Fighter : MonoBehaviour, IAction
 
     private void AttackBehaviour()
     {
-        GetComponent<Animator>().SetTrigger("attack");
+        if (timeSinceLastAttack > timeBetweenAttacks)
+        {
+            // This will trigger the Hit() event.
+            GetComponent<Animator>().SetTrigger("attack");
+            timeSinceLastAttack = 0;
+        }
     }
 
     // Animation Event
     private void Hit()
     {
-
+        Health healthComponent = target.GetComponent<Health>();
+        healthComponent.TakeDamage(weaponDamage);
     }
 }
