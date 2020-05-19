@@ -4,9 +4,8 @@ using UnityEngine;
 public class Fighter : MonoBehaviour, IAction
 {
     [SerializeField] float weaponRange = 2f;
-    [SerializeField] float timeBetweenAttacks = 3f;
+    [SerializeField] float timeBetweenAttacks = 1f;
     [SerializeField] float weaponDamage = 5f;
-
 
 
     Transform target;

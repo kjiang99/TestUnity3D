@@ -639,6 +639,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 860109727}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &987192639 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7199248604712837859, guid: 78b58ea0a76094a4ca890653931d258c,
+    type: 3}
+  m_PrefabInstance: {fileID: 541997319}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1241218026
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -848,7 +854,7 @@ PrefabInstance:
         type: 3}
       propertyPath: target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 987192639}
     - target: {fileID: 4630390984937286057, guid: 8285109b194f848108a58905481931c3,
         type: 3}
       propertyPath: m_Name
