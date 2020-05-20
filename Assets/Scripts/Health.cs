@@ -8,6 +8,8 @@ public class Health : MonoBehaviour
 
     bool isDead = false;
 
+    public bool IsDead { get { return isDead; } }
+
     public void TakeDamage(float damage)
     {
         healthPoints = Mathf.Max(healthPoints - damage, 0);
