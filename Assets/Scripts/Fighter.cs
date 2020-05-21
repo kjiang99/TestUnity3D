@@ -4,7 +4,7 @@ using UnityEngine;
 public class Fighter : MonoBehaviour, IAction
 {
     [SerializeField] float weaponRange = 2f;
-    [SerializeField] float timeBetweenAttacks = 1f;
+    [SerializeField] float timeBetweenAttacks = 2f;
     [SerializeField] float weaponDamage = 5f;
 
 
@@ -35,6 +35,32 @@ public class Fighter : MonoBehaviour, IAction
         return Vector3.Distance(transform.position, target.transform.position) < weaponRange;
     }
 
+
+    private void AttackBehaviour()
+    {
+        transform.LookAt(target.transform);
+        if (timeSinceLastAttack > timeBetweenAttacks)
+        {
+            // This will trigger the Hit() event.
+            TriggerAttack();
+            timeSinceLastAttack = 0;
+        }
+    }
+
+    private void TriggerAttack()
+    {
+        GetComponent<Animator>().ResetTrigger("stopAttack");
+        GetComponent<Animator>().SetTrigger("attack");
+    }
+
+    public bool CanAttack(CombatTarget combatTarget)
+    {
+        if (combatTarget == null) { return false; }
+        Health targetToTest = combatTarget.GetComponent<Health>();
+        return targetToTest != null && !targetToTest.IsDead;
+    }
+
+
     public void Attack(CombatTarget combatTarget)
     {
         GetComponent<ActionScheduler>().StartAction(this);
@@ -43,21 +69,17 @@ public class Fighter : MonoBehaviour, IAction
 
     public void Cancel()
     {
-        GetComponent<Animator>().SetTrigger("stopAttack");
+        StopAttack();
         target = null;
     }
 
 
-    private void AttackBehaviour()
+    private void StopAttack()
     {
-        transform.LookAt(target.transform);
-        if (timeSinceLastAttack > timeBetweenAttacks)
-        {
-            // This will trigger the Hit() event.
-            GetComponent<Animator>().SetTrigger("attack");
-            timeSinceLastAttack = 0;
-        }
+        GetComponent<Animator>().ResetTrigger("attack");
+        GetComponent<Animator>().SetTrigger("stopAttack");
     }
+
 
     // Animation Event
     private void Hit()
